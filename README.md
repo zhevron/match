@@ -2,7 +2,7 @@ match - Matcher library for testing
 ===================================
 
 [![wercker status](https://app.wercker.com/status/d82e11215fa0ebf705f77a6b864de6f6/s/master "wercker status")](https://app.wercker.com/project/bykey/d82e11215fa0ebf705f77a6b864de6f6)
-[![Coverage Status](https://coveralls.io/repos/zhevron/match/badge.svg?branch=master)](https://coveralls.io/r/zhevron/match?branch=master)
+[![Coverage Status](https://coveralls.io/repos/zhevron/match/badge.svg?branch=master&service=github)](https://coveralls.io/github/zhevron/match?branch=master)
 [![GoDoc](https://godoc.org/github.com/zhevron/match?status.svg)](https://godoc.org/github.com/zhevron/match)
 
 **match** is a matcher library for use in unit tests written in [Google Go](https://golang.org).  
