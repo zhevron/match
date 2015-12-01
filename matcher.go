@@ -41,13 +41,17 @@ func (m *Matcher) IsNotNil() *Matcher {
 
 // Equals asserts that the matched value is equal to value.
 func (m *Matcher) Equals(value interface{}) *Matcher {
-	// TODO: Implement Matcher.Equals
+	if !reflect.DeepEqual(m.value, value) {
+		m.t.Errorf("expected == %v, got %v", value, m.value)
+	}
 	return m
 }
 
 // NotEquals asserts that the match value is not equal to value.
 func (m *Matcher) NotEquals(value interface{}) *Matcher {
-	// TODO: Implement Matcher.NotEquals
+	if reflect.DeepEqual(m.value, value) {
+		m.t.Errorf("expected != %v, got %v", value, m.value)
+	}
 	return m
 }
 
