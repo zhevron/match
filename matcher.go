@@ -2,6 +2,7 @@ package match
 
 import (
 	"reflect"
+	"regexp"
 	"testing"
 )
 
@@ -112,7 +113,17 @@ func (m *Matcher) Contains(value interface{}) *Matcher {
 // Note: If the regex cannot be compiled, a fatal error will be thrown.
 // If used on a non-string value, a fatal error will be thrown.
 func (m *Matcher) Matches(pattern string) *Matcher {
-	// TODO: Implement Matcher.Matches
+	rv := reflect.ValueOf(m.value)
+	if rv.Kind() != reflect.String {
+		m.t.Fatalf("expected string, got %s", rv.Kind().String())
+	}
+	re, err := regexp.Compile(pattern)
+	if err != nil {
+		m.t.Fatal(err)
+	}
+	if !re.MatchString(rv.String()) {
+		m.t.Errorf("expected %#q to match pattern %#q", rv.String(), pattern)
+	}
 	return m
 }
 
