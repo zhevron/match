@@ -105,6 +105,7 @@ func (m *Matcher) GreaterThan(value interface{}) *Matcher {
 // If used on an array, asserts that the array contains value.
 // If used on a map, asserts that the map contains a key with value.
 // If used on a string, asserts that the string contains value.
+// If used on an incompatible value, a fatal error will be thrown.
 func (m *Matcher) Contains(value interface{}) *Matcher {
 	rv := reflect.ValueOf(m.value)
 	switch rv.Kind() {
@@ -135,7 +136,7 @@ func (m *Matcher) Contains(value interface{}) *Matcher {
 			m.t.Errorf("expected %#q to contain %#q", rv.String(), value.(string))
 		}
 	default:
-		m.t.Errorf("expected array, map or string, got %s", rv.Kind().String())
+		m.t.Fatalf("expected array, map or string, got %s", rv.Kind().String())
 	}
 	return m
 }

@@ -235,6 +235,23 @@ func TestMatcherContains_String(t *testing.T) {
 	}
 }
 
+func TestMatcherContains_InvalidType(t *testing.T) {
+	done := make(chan bool)
+	go func() {
+		test := &testing.T{}
+		m := Matcher{test, 0}
+		defer func() {
+			recover()
+			if !test.Failed() {
+				t.Error("expected failure, but the test passed")
+			}
+			done <- true
+		}()
+		m.Contains(0)
+	}()
+	<-done
+}
+
 func TestMatcherMatches(t *testing.T) {
 	test := &testing.T{}
 	m := Matcher{test, "this is a test"}
