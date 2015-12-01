@@ -8,9 +8,8 @@ import (
 // Match creates a new Matcher for chaining conditions.
 func Match(t *testing.T, value interface{}) *Matcher {
 	return &Matcher{
-		t:      t,
-		value:  value,
-		failed: false,
+		t:     t,
+		value: value,
 	}
 }
 

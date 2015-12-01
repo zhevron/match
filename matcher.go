@@ -7,9 +7,8 @@ import (
 
 // Matcher is a helper object for chaining matcher conditions.
 type Matcher struct {
-	t      *testing.T
-	value  interface{}
-	failed bool
+	t     *testing.T
+	value interface{}
 }
 
 // Fatal causes the unit test to immediately fail is one of the previous
@@ -18,7 +17,7 @@ type Matcher struct {
 // can build complex conditions this way.
 // Ex: match.IsNotNil(t, value).Fatal().Equals(other)
 func (m *Matcher) Fatal() *Matcher {
-	if m.failed {
+	if m.t.Failed() {
 		m.t.FailNow()
 	}
 	return m
