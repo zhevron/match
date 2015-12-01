@@ -128,7 +128,10 @@ func (m *Matcher) Matches(pattern string) *Matcher {
 }
 
 // KindOf asserts that the matched value of the kind.
-func (m *Matcher) KindOf(t reflect.Kind) *Matcher {
-	// TODO: Implement Matcher.KindOf
+func (m *Matcher) KindOf(kind reflect.Kind) *Matcher {
+	rv := reflect.ValueOf(m.value)
+	if rv.Kind() != kind {
+		m.t.Errorf("expected kind %s, got %s", kind.String(), rv.Kind().String())
+	}
 	return m
 }
