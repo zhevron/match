@@ -6,70 +6,80 @@ import (
 )
 
 func TestMatch(t *testing.T) {
-	res := Match(t, nil)
+	test := &testing.T{}
+	res := Match(test, nil)
 	if res == nil {
 		t.Errorf("Expected a value, got nil")
 	}
 }
 
 func TestIsNil(t *testing.T) {
-	res := IsNil(t, 0)
+	test := &testing.T{}
+	res := IsNil(test, 0)
 	if res == nil {
 		t.Errorf("Expected a value, got nil")
 	}
 }
 
 func TestIsNotNil(t *testing.T) {
-	res := IsNotNil(t, 0)
+	test := &testing.T{}
+	res := IsNotNil(test, 0)
 	if res == nil {
 		t.Errorf("Expected a value, got nil")
 	}
 }
 
 func TestEquals(t *testing.T) {
-	res := Equals(t, 0, 0)
+	test := &testing.T{}
+	res := Equals(test, 0, 0)
 	if res == nil {
 		t.Errorf("Expected a value, got nil")
 	}
 }
 
 func TestNotEquals(t *testing.T) {
-	res := NotEquals(t, 0, 0)
+	test := &testing.T{}
+	res := NotEquals(test, 0, 0)
 	if res == nil {
 		t.Errorf("Expected a value, got nil")
 	}
 }
 
 func TestLessThan(t *testing.T) {
-	res := LessThan(t, 0, 0)
+	test := &testing.T{}
+	res := LessThan(test, 0, 0)
 	if res == nil {
 		t.Errorf("Expected a value, got nil")
 	}
 }
 
 func TestGreaterThan(t *testing.T) {
-	res := GreaterThan(t, 0, 0)
+	test := &testing.T{}
+	res := GreaterThan(test, 0, 0)
 	if res == nil {
 		t.Errorf("Expected a value, got nil")
 	}
 }
 
 func TestContains(t *testing.T) {
-	res := Contains(t, "", "")
+	test := &testing.T{}
+	res := Contains(test, "", "")
 	if res == nil {
 		t.Errorf("Expected a value, got nil")
 	}
 }
 
 func TestMatches(t *testing.T) {
-	res := Matches(t, "", ".*")
+	test := &testing.T{}
+	res := Matches(test, "", ".*")
 	if res == nil {
 		t.Errorf("Expected a value, got nil")
 	}
 }
 
 func TestKindOf(t *testing.T) {
-	res := KindOf(t, 0, reflect.Int32)
+	test := &testing.T{}
+	res := KindOf(test, 0, reflect.Int32)
 	if res == nil {
 		t.Errorf("Expected a value, got nil")
 	}
