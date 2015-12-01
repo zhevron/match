@@ -22,6 +22,15 @@ func TestMatcherFatal(t *testing.T) {
 	<-done
 }
 
+func TestMatcherFatal_NotFailed(t *testing.T) {
+	test := &testing.T{}
+	m := Matcher{test, 0}
+	m.Equals(0).Fatal()
+	if test.Failed() {
+		t.Error("expected pass, but the test failed")
+	}
+}
+
 func TestMatcherIsNil(t *testing.T) {
 	test := &testing.T{}
 	m := Matcher{test, nil}
