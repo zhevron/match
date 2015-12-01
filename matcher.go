@@ -3,6 +3,7 @@ package match
 import (
 	"reflect"
 	"regexp"
+	"strings"
 	"testing"
 )
 
@@ -105,7 +106,37 @@ func (m *Matcher) GreaterThan(value interface{}) *Matcher {
 // If used on a map, asserts that the map contains a key with value.
 // If used on a string, asserts that the string contains value.
 func (m *Matcher) Contains(value interface{}) *Matcher {
-	// TODO: Implement Matcher.Contains
+	rv := reflect.ValueOf(m.value)
+	switch rv.Kind() {
+	case reflect.Array, reflect.Slice:
+		ok := false
+		for i := 0; i < rv.Len(); i++ {
+			if rv.Index(i).Interface() == value {
+				ok = true
+				break
+			}
+		}
+		if !ok {
+			m.t.Errorf("expected array to contain %v", value)
+		}
+	case reflect.Map:
+		ok := false
+		for _, key := range rv.MapKeys() {
+			if key.Interface() == value {
+				ok = true
+				break
+			}
+		}
+		if !ok {
+			m.t.Errorf("expected map to have key %v", value)
+		}
+	case reflect.String:
+		if !strings.Contains(rv.String(), value.(string)) {
+			m.t.Errorf("expected %#q to contain %#q", rv.String(), value.(string))
+		}
+	default:
+		m.t.Errorf("expected array, map or string, got %s", rv.Kind().String())
+	}
 	return m
 }
 
