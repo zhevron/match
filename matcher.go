@@ -25,13 +25,17 @@ func (m *Matcher) Fatal() *Matcher {
 
 // IsNil asserts that the matched value is nil.
 func (m *Matcher) IsNil() *Matcher {
-	// TODO: Implement Matcher.IsNil
+	if m.value != nil {
+		m.t.Errorf("expected == nil, got %v", m.value)
+	}
 	return m
 }
 
 // IsNotNil asserts that the matched value is not nil.
 func (m *Matcher) IsNotNil() *Matcher {
-	// TODO: Implement Matcher.IsNotNil
+	if m.value == nil {
+		m.t.Error("expected != nil, got nil")
+	}
 	return m
 }
 
