@@ -78,15 +78,43 @@ func TestMatcherNotEquals(t *testing.T) {
 	}
 }
 
-func TestMatcherLessThan(t *testing.T) {
+func TestMatcherLessThan_Int(t *testing.T) {
 	test := &testing.T{}
-	m := Matcher{test, 0}
+	m := Matcher{test, int(0)}
 	m.LessThan(1)
 	if test.Failed() {
 		t.Error("expected pass, but the test failed")
 	}
-	m = Matcher{test, 2}
+	m = Matcher{test, int(2)}
 	m.LessThan(1)
+	if !test.Failed() {
+		t.Error("expected failure, but the test passed")
+	}
+}
+
+func TestMatcherLessThan_Uint(t *testing.T) {
+	test := &testing.T{}
+	m := Matcher{test, uint(0)}
+	m.LessThan(1)
+	if test.Failed() {
+		t.Error("expected pass, but the test failed")
+	}
+	m = Matcher{test, uint(2)}
+	m.LessThan(1)
+	if !test.Failed() {
+		t.Error("expected failure, but the test passed")
+	}
+}
+
+func TestMatcherLessThan_Float(t *testing.T) {
+	test := &testing.T{}
+	m := Matcher{test, float64(0.0)}
+	m.LessThan(1.0)
+	if test.Failed() {
+		t.Error("expected pass, but the test failed")
+	}
+	m = Matcher{test, float64(2.0)}
+	m.LessThan(1.0)
 	if !test.Failed() {
 		t.Error("expected failure, but the test passed")
 	}
@@ -109,15 +137,43 @@ func TestMatcherLessThan_NonNumeric(t *testing.T) {
 	<-done
 }
 
-func TestMatcherGreaterThan(t *testing.T) {
+func TestMatcherGreaterThan_Int(t *testing.T) {
 	test := &testing.T{}
-	m := Matcher{test, 2}
+	m := Matcher{test, int(2)}
 	m.GreaterThan(1)
 	if test.Failed() {
 		t.Error("expected pass, but the test failed")
 	}
-	m = Matcher{test, 0}
+	m = Matcher{test, int(0)}
 	m.GreaterThan(1)
+	if !test.Failed() {
+		t.Error("expected failure, but the test passed")
+	}
+}
+
+func TestMatcherGreaterThan_Uint(t *testing.T) {
+	test := &testing.T{}
+	m := Matcher{test, uint(2)}
+	m.GreaterThan(1)
+	if test.Failed() {
+		t.Error("expected pass, but the test failed")
+	}
+	m = Matcher{test, uint(0)}
+	m.GreaterThan(1)
+	if !test.Failed() {
+		t.Error("expected failure, but the test passed")
+	}
+}
+
+func TestMatcherGreaterThan_Float(t *testing.T) {
+	test := &testing.T{}
+	m := Matcher{test, float64(2.0)}
+	m.GreaterThan(1.0)
+	if test.Failed() {
+		t.Error("expected pass, but the test failed")
+	}
+	m = Matcher{test, float64(0.0)}
+	m.GreaterThan(1.0)
 	if !test.Failed() {
 		t.Error("expected failure, but the test passed")
 	}
