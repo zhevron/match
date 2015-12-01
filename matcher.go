@@ -59,7 +59,21 @@ func (m *Matcher) NotEquals(value interface{}) *Matcher {
 // Note: This function will only work on numeric values.
 // If a non-numeric value is passed, a fatal error will be thrown.
 func (m *Matcher) LessThan(value interface{}) *Matcher {
-	// TODO: Implement Matcher.LessThan
+	ok := true
+	rv := reflect.ValueOf(m.value)
+	switch rv.Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		ok = rv.Int() < reflect.ValueOf(value).Int()
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		ok = rv.Uint() < uint64(reflect.ValueOf(value).Int())
+	case reflect.Float32, reflect.Float64:
+		ok = rv.Float() < reflect.ValueOf(value).Float()
+	default:
+		m.t.Fatalf("expected numeric value, got %v", m.value)
+	}
+	if !ok {
+		m.t.Errorf("expected < %v, got %v", value, m.value)
+	}
 	return m
 }
 
@@ -67,7 +81,21 @@ func (m *Matcher) LessThan(value interface{}) *Matcher {
 // Note: This function will only work on numeric values.
 // If a non-numeric value is passed, a fatal error will be thrown.
 func (m *Matcher) GreaterThan(value interface{}) *Matcher {
-	// TODO: Implement Matcher.GreaterThan
+	ok := true
+	rv := reflect.ValueOf(m.value)
+	switch rv.Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		ok = rv.Int() > reflect.ValueOf(value).Int()
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		ok = rv.Uint() > uint64(reflect.ValueOf(value).Int())
+	case reflect.Float32, reflect.Float64:
+		ok = rv.Float() > reflect.ValueOf(value).Float()
+	default:
+		m.t.Fatalf("expected numeric value, got %v", m.value)
+	}
+	if !ok {
+		m.t.Errorf("expected < %v, got %v", value, m.value)
+	}
 	return m
 }
 
