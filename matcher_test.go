@@ -249,21 +249,37 @@ func TestMatcherMatches(t *testing.T) {
 }
 
 func TestMatcherMatches_InvalidRegex(t *testing.T) {
-	test := &testing.T{}
-	m := Matcher{test, 0}
-	m.Matches("^0$")
-	if !test.Failed() {
-		t.Error("expected failure, but the test passed")
-	}
+	done := make(chan bool)
+	go func() {
+		test := &testing.T{}
+		m := Matcher{test, 0}
+		defer func() {
+			recover()
+			if !test.Failed() {
+				t.Error("expected failure, but the test passed")
+			}
+			done <- true
+		}()
+		m.Matches("^0$")
+	}()
+	<-done
 }
 
 func TestMatcherMatches_NonString(t *testing.T) {
-	test := &testing.T{}
-	m := Matcher{test, "this is a test"}
-	m.Matches("(?x:^this is a test$)")
-	if !test.Failed() {
-		t.Error("expected failure, but the test passed")
-	}
+	done := make(chan bool)
+	go func() {
+		test := &testing.T{}
+		m := Matcher{test, "this is a test"}
+		defer func() {
+			recover()
+			if !test.Failed() {
+				t.Error("expected failure, but the test passed")
+			}
+			done <- true
+		}()
+		m.Matches("(?x:^this is a test$)")
+	}()
+	<-done
 }
 
 func TestMatcherKindOf(t *testing.T) {
